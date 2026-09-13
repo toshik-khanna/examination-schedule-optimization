@@ -1,0 +1,28 @@
+subjects:
+  - name: Mathematics
+    code: M
+    difficulty: 5
+  - name: Physics
+    code: P
+    difficulty: 5
+  - name: Chemistry
+    code: C
+    difficulty: 4
+  - name: Computer Science
+    code: CS
+    difficulty: 3
+  - name: English
+    code: E
+    difficulty: 3
+
+exam_slots:
+  - day: 1
+    session: Morning
+  - day: 2
+    session: Morning
+  - day: 3
+    session: Morning
+  - day: 4
+    session: Morning
+  - day: 5
+    session: Morning

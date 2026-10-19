@@ -13,7 +13,7 @@ subjects:
     difficulty: 3
   - name: English
     code: E
-    difficulty: 3
+    difficulty: 2
 
 exam_slots:
   - day: 1

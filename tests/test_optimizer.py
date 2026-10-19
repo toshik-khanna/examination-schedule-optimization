@@ -22,7 +22,7 @@ def research_subjects() -> List[Subject]:
         Subject(name="Physics", code="P", difficulty=5),
         Subject(name="Chemistry", code="C", difficulty=4),
         Subject(name="Computer Science", code="CS", difficulty=3),
-        Subject(name="English", code="E", difficulty=3),
+        Subject(name="English", code="E", difficulty=2),
     ]
 
 
@@ -148,8 +148,13 @@ def test_optimal_score_independently_verified() -> None:
 
     The optimal score is discovered by the optimizer through enumeration.
     This test independently verifies it by computing all scores manually.
+
+    Research paper expected values:
+        Baseline M-P-C-E-CS: 59
+        Minimum score: 45
+        Number of optimal schedules: 4
     """
-    difficulties = {"M": 5, "P": 5, "C": 4, "CS": 3, "E": 3}
+    difficulties = {"M": 5, "P": 5, "C": 4, "CS": 3, "E": 2}
     codes = list(difficulties.keys())
 
     # Independently compute all 120 scores
@@ -168,10 +173,40 @@ def test_optimal_score_independently_verified() -> None:
         Subject(name="Physics", code="P", difficulty=5),
         Subject(name="Chemistry", code="C", difficulty=4),
         Subject(name="Computer Science", code="CS", difficulty=3),
-        Subject(name="English", code="E", difficulty=3),
+        Subject(name="English", code="E", difficulty=2),
     ]
     slots = tuple(ExamSlot(day=d, session="Morning") for d in range(1, 6))
     result = optimize(subjects, slots)
 
     # The optimizer's result must match the independent calculation
     assert result.optimal_score == independent_minimum
+    assert len(all_scores) == 120
+    assert result.total_evaluated == 120
+    assert result.optimal_score == 45
+    assert result.num_optimal == 4
+
+
+def test_all_four_optimal_orders_match_research_model(
+    optimization_result: OptimizationResult,
+) -> None:
+    """Verify that the optimizer finds exactly the four optimal orders from the research model.
+
+    With difficulties M=5, P=5, C=4, CS=3, E=2, the minimum score of 45
+    is achieved by exactly four orderings (and their reverses form two pairs):
+        M-CS-C-E-P  (score = 15+12+8+10 = 45)
+        P-E-C-CS-M  (score = 10+8+12+15 = 45)  — reverse of above
+        M-E-C-CS-P  (score = 10+8+12+15 = 45)
+        P-CS-C-E-M  (score = 15+12+8+10 = 45)  — reverse of above
+    """
+    actual = {
+        s.schedule.subject_codes
+        for s in optimization_result.optimal_schedules
+    }
+    expected = {
+        "M-CS-C-E-P",
+        "P-E-C-CS-M",
+        "M-E-C-CS-P",
+        "P-CS-C-E-M",
+    }
+    assert actual == expected
+

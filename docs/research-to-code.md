@@ -28,7 +28,7 @@ is used. This guarantees the global optimum — no heuristics are needed.
 ## Research vs Implementation Decisions
 
 ### Explicitly Specified by Research
-- Subject identities and difficulty values (M=5, P=5, C=4, CS=3, E=3)
+- Subject identities and difficulty values (M=5, P=5, C=4, CS=3, E=2)
 - Five examination days, Morning session
 - Each subject appears exactly once
 - CSB = product of consecutive difficulties

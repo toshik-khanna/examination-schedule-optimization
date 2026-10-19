@@ -137,9 +137,9 @@ def test_property_optimal_score_leq_every_candidate_score() -> None:
 def test_example_schedules_comparison() -> None:
     """Verify both research example schedules:
 
-    Example 1: M-P-C-E-CS with score 66
-    Example 2: M-CS-C-E-P with score 54
-    Verify 54 < 66.
+    Example 1 (baseline): M-P-C-E-CS with score 59
+    Example 2 (optimal):  M-CS-C-E-P with score 45
+    Verify 45 < 59.
     """
     config_path = PROJECT_ROOT / "config" / "schedule_config.yaml"
     with open(config_path, "r", encoding="utf-8") as f:
@@ -158,19 +158,19 @@ def test_example_schedules_comparison() -> None:
 
     scored_by_codes = {s.schedule.subject_codes: s for s in result.all_scored}
 
-    # Verify Example 1
+    # Verify Example 1 (baseline)
     assert "M-P-C-E-CS" in scored_by_codes
     ex1 = scored_by_codes["M-P-C-E-CS"]
-    assert ex1.csb_values == (25, 20, 12, 9)
-    assert ex1.score == 66
+    assert ex1.csb_values == (25, 20, 8, 6)
+    assert ex1.score == 59
 
-    # Verify Example 2
+    # Verify Example 2 (optimal)
     assert "M-CS-C-E-P" in scored_by_codes
     ex2 = scored_by_codes["M-CS-C-E-P"]
-    assert ex2.csb_values == (15, 12, 12, 15)
-    assert ex2.score == 54
+    assert ex2.csb_values == (15, 12, 8, 10)
+    assert ex2.score == 45
     assert ex2.is_optimal is True
 
-    # Verify 54 < 66
+    # Verify 45 < 59
     assert ex2.score < ex1.score
-    assert 54 < 66
+    assert 45 < 59

@@ -13,7 +13,7 @@ Given five subjects with difficulty ratings:
 | Physics | P | 5 |
 | Chemistry | C | 4 |
 | Computer Science | CS | 3 |
-| English | E | 3 |
+| English | E | 2 |
 
 The **Consecutive Subject Burden (CSB)** for two adjacent subjects is:
 
@@ -28,6 +28,40 @@ S = Σ(D_i × D_{i+1}) for i = 1 to 4
 ```
 
 The **optimal schedule** minimizes S over all 5! = 120 possible orderings.
+
+## Expected Results for the Research Model
+
+The model uses the following difficulty scores:
+
+- Mathematics (M): 5
+- Physics (P): 5
+- Chemistry (C): 4
+- Computer Science (CS): 3
+- English (E): 2
+
+The objective function is:
+
+```
+S = Σ(D_i × D_{i+1}), for i = 1 to 4
+```
+
+The experiment evaluates all 120 possible orders.
+
+Expected results:
+- Baseline M-P-C-E-CS: **59**
+- Minimum score: **45**
+- Number of optimal schedules: **4**
+- Absolute reduction from baseline: **14**
+- Percentage reduction: **23.73%**
+
+The four optimal orderings (all scoring 45):
+
+| # | Order | CSB Values | Total |
+|---|---|---|---|
+| 1 | M-CS-C-E-P | 15, 12, 8, 10 | 45 |
+| 2 | P-E-C-CS-M | 10, 8, 12, 15 | 45 |
+| 3 | M-E-C-CS-P | 10, 8, 12, 15 | 45 |
+| 4 | P-CS-C-E-M | 15, 12, 8, 10 | 45 |
 
 ## Installation
 

@@ -31,7 +31,7 @@ def research_subjects() -> dict[str, Subject]:
         "P": Subject(name="Physics", code="P", difficulty=5),
         "C": Subject(name="Chemistry", code="C", difficulty=4),
         "CS": Subject(name="Computer Science", code="CS", difficulty=3),
-        "E": Subject(name="English", code="E", difficulty=3),
+        "E": Subject(name="English", code="E", difficulty=2),
     }
 
 
@@ -43,24 +43,24 @@ def test_calculate_csb_math_physics(research_subjects: dict[str, Subject]) -> No
 
 
 def test_calculate_csb_cs_english(research_subjects: dict[str, Subject]) -> None:
-    """Test calculate_csb for CS(3) and E(3) -> 9."""
+    """Test calculate_csb for CS(3) and E(2) -> 6."""
     cs = research_subjects["CS"]
     e = research_subjects["E"]
-    assert calculate_csb(cs, e) == 9
+    assert calculate_csb(cs, e) == 6
 
 
 def test_calculate_csb_math_english(research_subjects: dict[str, Subject]) -> None:
-    """Test calculate_csb for M(5) and E(3) -> 15."""
+    """Test calculate_csb for M(5) and E(2) -> 10."""
     m = research_subjects["M"]
     e = research_subjects["E"]
-    assert calculate_csb(m, e) == 15
+    assert calculate_csb(m, e) == 10
 
 
 def test_example_1_m_p_c_e_cs(
     research_subjects: dict[str, Subject],
     default_slots: Tuple[ExamSlot, ...],
 ) -> None:
-    """Test Example 1: M-P-C-E-CS -> CSB values (25, 20, 12, 9), total 66."""
+    """Test Example 1 (baseline): M-P-C-E-CS -> CSB values (25, 20, 8, 6), total 59."""
     schedule = Schedule(
         subjects=(
             research_subjects["M"],
@@ -72,16 +72,16 @@ def test_example_1_m_p_c_e_cs(
         slots=default_slots,
     )
     csb_values = calculate_csb_values(schedule)
-    assert csb_values == (25, 20, 12, 9)
+    assert csb_values == (25, 20, 8, 6)
     total_score = calculate_schedule_score(schedule)
-    assert total_score == 66
+    assert total_score == 59
 
 
 def test_example_2_m_cs_c_e_p(
     research_subjects: dict[str, Subject],
     default_slots: Tuple[ExamSlot, ...],
 ) -> None:
-    """Test Example 2: M-CS-C-E-P -> CSB values (15, 12, 12, 15), total 54."""
+    """Test Example 2 (optimal): M-CS-C-E-P -> CSB values (15, 12, 8, 10), total 45."""
     schedule = Schedule(
         subjects=(
             research_subjects["M"],
@@ -93,9 +93,9 @@ def test_example_2_m_cs_c_e_p(
         slots=default_slots,
     )
     csb_values = calculate_csb_values(schedule)
-    assert csb_values == (15, 12, 12, 15)
+    assert csb_values == (15, 12, 8, 10)
     total_score = calculate_schedule_score(schedule)
-    assert total_score == 54
+    assert total_score == 45
 
 
 def test_calculate_csb_values_returns_exactly_four_values(

@@ -21,7 +21,7 @@ def default_subjects() -> Tuple[Subject, ...]:
         Subject(name="Physics", code="P", difficulty=5),
         Subject(name="Chemistry", code="C", difficulty=4),
         Subject(name="Computer Science", code="CS", difficulty=3),
-        Subject(name="English", code="E", difficulty=3),
+        Subject(name="English", code="E", difficulty=2),
     )
 
 

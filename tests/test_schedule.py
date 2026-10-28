@@ -21,7 +21,7 @@ def default_subjects() -> Tuple[Subject, ...]:
         Subject(name="Physics", code="P", difficulty=5),
         Subject(name="Chemistry", code="C", difficulty=4),
         Subject(name="Computer Science", code="CS", difficulty=3),
-        Subject(name="English", code="E", difficulty=3),
+        Subject(name="English", code="E", difficulty=2),
     )
 
 
@@ -58,7 +58,7 @@ def test_difficulty_sequence_property(
 ) -> None:
     """Test difficulty_sequence property returns the tuple of difficulty integers."""
     schedule = Schedule(subjects=default_subjects, slots=default_slots)
-    assert schedule.difficulty_sequence == (5, 5, 4, 3, 3)
+    assert schedule.difficulty_sequence == (5, 5, 4, 3, 2)
 
 
 def test_duplicate_subject_raises_value_error(

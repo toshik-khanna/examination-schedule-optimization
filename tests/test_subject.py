@@ -25,7 +25,7 @@ def test_all_five_research_subjects_create_successfully() -> None:
         ("Physics", "P", 5),
         ("Chemistry", "C", 4),
         ("Computer Science", "CS", 3),
-        ("English", "E", 3),
+        ("English", "E", 2),
     ]
     created = [
         Subject(name=name, code=code, difficulty=diff)
